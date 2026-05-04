@@ -1,4 +1,5 @@
 pub mod dirent;
+pub mod errno_edge;
 pub mod file_io;
 pub mod file_io2;
 pub mod filestat;
@@ -14,6 +15,7 @@ pub mod process;
 pub mod process2;
 pub mod resource;
 pub mod signal;
+pub mod signal2;
 pub mod socket2;
 pub mod sysinfo;
 pub mod thread;
@@ -53,6 +55,27 @@ pub fn register_all(runner: &mut TestRunner) {
     runner.register(Box::new(file_io2::UnlinkatTest));
     runner.register(Box::new(file_io2::RenameatTest));
     runner.register(Box::new(file_io2::ReadaheadTest));
+    // Errno edge cases (17)
+    runner.register(Box::new(errno_edge::ReadClosedFdTest));
+    runner.register(Box::new(errno_edge::WriteClosedFdTest));
+    runner.register(Box::new(errno_edge::LseekClosedFdTest));
+    runner.register(Box::new(errno_edge::MmapBadProtTest));
+    runner.register(Box::new(errno_edge::KillInvalidSigTest));
+    runner.register(Box::new(errno_edge::FcntlInvalidCmdTest));
+    runner.register(Box::new(errno_edge::OpenDeepNoentTest));
+    runner.register(Box::new(errno_edge::RmdirNotemptyTest));
+    runner.register(Box::new(errno_edge::OpenEnotdirTest));
+    runner.register(Box::new(errno_edge::WritePipeEpipeTest));
+    runner.register(Box::new(errno_edge::OpenEaccesTest));
+    runner.register(Box::new(errno_edge::ChmodEaccesTest));
+    runner.register(Box::new(errno_edge::OpenIsdirTest));
+    runner.register(Box::new(errno_edge::SymlinkLoopTest));
+    runner.register(Box::new(errno_edge::OpenNametoolongTest));
+    runner.register(Box::new(errno_edge::WriteZeroBytesTest));
+    runner.register(Box::new(errno_edge::LseekEndEmptyFileTest));
+    runner.register(Box::new(errno_edge::StatVsLstatTest));
+    runner.register(Box::new(errno_edge::FstatStatConsistencyTest));
+    runner.register(Box::new(errno_edge::ReadEofTest));
     // File stat / permissions (10)
     runner.register(Box::new(filestat::ChmodBasicTest));
     runner.register(Box::new(filestat::TruncateBasicTest));
@@ -159,13 +182,20 @@ pub fn register_all(runner: &mut TestRunner) {
     runner.register(Box::new(resource::PrlimitGetTest));
     runner.register(Box::new(resource::MincoreTest));
     runner.register(Box::new(resource::GetloadavgTest));
-    // Signal (6)
+    // Signal basic (6)
     runner.register(Box::new(signal::KillSelfTest));
     runner.register(Box::new(signal::KillInvalidPidTest));
     runner.register(Box::new(signal::SigactionBasicTest));
     runner.register(Box::new(signal::SigprocmaskBlockTest));
     runner.register(Box::new(signal::SigpendingTest));
     runner.register(Box::new(signal::RaiseTest));
+    // Signal advanced (6)
+    runner.register(Box::new(signal2::SigaltstackTest));
+    runner.register(Box::new(signal2::SigsuspendTest));
+    runner.register(Box::new(signal2::SignalfdTest));
+    runner.register(Box::new(signal2::SigmaskInheritTest));
+    runner.register(Box::new(signal2::SigqueueTest));
+    runner.register(Box::new(signal2::SigchldTest));
     // Sysinfo (11)
     runner.register(Box::new(sysinfo::UnameTest));
     runner.register(Box::new(sysinfo::SysinfoTest));
