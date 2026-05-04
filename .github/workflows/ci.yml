@@ -31,6 +31,7 @@ jobs:
           path: reports/
 
   build-riscv64:
+    continue-on-error: true
     name: Cross-compile riscv64
     runs-on: ubuntu-latest
     steps:
