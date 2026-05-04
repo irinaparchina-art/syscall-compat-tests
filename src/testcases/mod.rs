@@ -5,6 +5,7 @@ pub mod io_advanced;
 pub mod ipc;
 pub mod memory;
 pub mod memory2;
+pub mod misc;
 pub mod network;
 pub mod pipe;
 pub mod poll_select;
@@ -12,6 +13,7 @@ pub mod process;
 pub mod process2;
 pub mod resource;
 pub mod signal;
+pub mod socket2;
 pub mod sysinfo;
 pub mod time;
 pub mod time2;
@@ -79,6 +81,15 @@ pub fn register_all(runner: &mut TestRunner) {
     runner.register(Box::new(network::GetsocknameTest));
     runner.register(Box::new(network::SetsockoptReuseTest));
     runner.register(Box::new(network::LoopbackConnectTest));
+    // Socket advanced (8)
+    runner.register(Box::new(socket2::UdpSendrecvTest));
+    runner.register(Box::new(socket2::UnixSocketTest));
+    runner.register(Box::new(socket2::SocketpairTest));
+    runner.register(Box::new(socket2::GetsockoptTypeTest));
+    runner.register(Box::new(socket2::ShutdownTest));
+    runner.register(Box::new(socket2::SockBufSizeTest));
+    runner.register(Box::new(socket2::ConnectRefusedTest));
+    runner.register(Box::new(socket2::GetpeernameTest));
     // Pipe / fcntl (6)
     runner.register(Box::new(pipe::PipeBasicTest));
     runner.register(Box::new(pipe::PipeReadEofTest));
@@ -175,4 +186,17 @@ pub fn register_all(runner: &mut TestRunner) {
     runner.register(Box::new(dirent::ChdirTest));
     runner.register(Box::new(dirent::OpenatTest));
     runner.register(Box::new(dirent::MkdiratTest));
+    // Misc (12)
+    runner.register(Box::new(misc::SetenvTest));
+    runner.register(Box::new(misc::GetrandomTest));
+    runner.register(Box::new(misc::GetrandomNonblockTest));
+    runner.register(Box::new(misc::DevUrandomTest));
+    runner.register(Box::new(misc::IoctlFionreadTest));
+    runner.register(Box::new(misc::SyncTest));
+    runner.register(Box::new(misc::GetloginTest));
+    runner.register(Box::new(misc::GetenvPathTest));
+    runner.register(Box::new(misc::MemfdCreateTest));
+    runner.register(Box::new(misc::EventfdTest));
+    runner.register(Box::new(misc::TimerfdTest));
+    runner.register(Box::new(misc::PrctlGetNameTest));
 }
