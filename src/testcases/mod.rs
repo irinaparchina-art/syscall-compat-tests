@@ -1,11 +1,14 @@
 pub mod file_io;
 pub mod filestat;
-pub mod process;
+pub mod io_advanced;
 pub mod memory;
-pub mod time;
-pub mod signal;
-pub mod pipe;
+pub mod memory2;
 pub mod network;
+pub mod pipe;
+pub mod process;
+pub mod process2;
+pub mod signal;
+pub mod time;
 
 use crate::runner::TestRunner;
 
@@ -40,13 +43,15 @@ pub fn register_all(runner: &mut TestRunner) {
     runner.register(Box::new(filestat::HardlinkTest));
     runner.register(Box::new(filestat::StatfsTest));
 
-    // Process (6)
-    runner.register(Box::new(process::GetpidTest));
-    runner.register(Box::new(process::GetppidTest));
-    runner.register(Box::new(process::GetuidTest));
-    runner.register(Box::new(process::GetgidTest));
-    runner.register(Box::new(process::UmaskTest));
-    runner.register(Box::new(process::ExitCodeTest));
+    // Advanced I/O (8)
+    runner.register(Box::new(io_advanced::WritevBasicTest));
+    runner.register(Box::new(io_advanced::ReadvBasicTest));
+    runner.register(Box::new(io_advanced::PreadBasicTest));
+    runner.register(Box::new(io_advanced::PwriteBasicTest));
+    runner.register(Box::new(io_advanced::SendfileBasicTest));
+    runner.register(Box::new(io_advanced::SpliceBasicTest));
+    runner.register(Box::new(io_advanced::FsyncTest));
+    runner.register(Box::new(io_advanced::FdatasyncTest));
 
     // Memory (5)
     runner.register(Box::new(memory::BrkBasicTest));
@@ -55,28 +60,13 @@ pub fn register_all(runner: &mut TestRunner) {
     runner.register(Box::new(memory::MunmapTest));
     runner.register(Box::new(memory::MprotectTest));
 
-    // Time (5)
-    runner.register(Box::new(time::ClockGettimeRealtimeTest));
-    runner.register(Box::new(time::ClockGettimeMonotonicTest));
-    runner.register(Box::new(time::GettimeofdayTest));
-    runner.register(Box::new(time::NanosleepBasicTest));
-    runner.register(Box::new(time::NanosleepInvalidTest));
-
-    // Signal (6)
-    runner.register(Box::new(signal::KillSelfTest));
-    runner.register(Box::new(signal::KillInvalidPidTest));
-    runner.register(Box::new(signal::SigactionBasicTest));
-    runner.register(Box::new(signal::SigprocmaskBlockTest));
-    runner.register(Box::new(signal::SigpendingTest));
-    runner.register(Box::new(signal::RaiseTest));
-
-    // Pipe / fcntl (6)
-    runner.register(Box::new(pipe::PipeBasicTest));
-    runner.register(Box::new(pipe::PipeReadEofTest));
-    runner.register(Box::new(pipe::Pipe2CloseOnExecTest));
-    runner.register(Box::new(pipe::FcntlGetFdTest));
-    runner.register(Box::new(pipe::FcntlSetNonblockTest));
-    runner.register(Box::new(pipe::ReadNonblockTest));
+    // Memory advanced (6)
+    runner.register(Box::new(memory2::MmapFileTest));
+    runner.register(Box::new(memory2::MsyncTest));
+    runner.register(Box::new(memory2::MadviseTest));
+    runner.register(Box::new(memory2::MlockTest));
+    runner.register(Box::new(memory2::MmapOffsetTest));
+    runner.register(Box::new(memory2::MremapTest));
 
     // Network (9)
     runner.register(Box::new(network::SocketTcpCreateTest));
@@ -88,4 +78,49 @@ pub fn register_all(runner: &mut TestRunner) {
     runner.register(Box::new(network::GetsocknameTest));
     runner.register(Box::new(network::SetsockoptReuseTest));
     runner.register(Box::new(network::LoopbackConnectTest));
+
+    // Pipe / fcntl (6)
+    runner.register(Box::new(pipe::PipeBasicTest));
+    runner.register(Box::new(pipe::PipeReadEofTest));
+    runner.register(Box::new(pipe::Pipe2CloseOnExecTest));
+    runner.register(Box::new(pipe::FcntlGetFdTest));
+    runner.register(Box::new(pipe::FcntlSetNonblockTest));
+    runner.register(Box::new(pipe::ReadNonblockTest));
+
+    // Process (6)
+    runner.register(Box::new(process::GetpidTest));
+    runner.register(Box::new(process::GetppidTest));
+    runner.register(Box::new(process::GetuidTest));
+    runner.register(Box::new(process::GetgidTest));
+    runner.register(Box::new(process::UmaskTest));
+    runner.register(Box::new(process::ExitCodeTest));
+
+    // Process advanced (12)
+    runner.register(Box::new(process2::GetpgrpTest));
+    runner.register(Box::new(process2::GetsidTest));
+    runner.register(Box::new(process2::GeteuidTest));
+    runner.register(Box::new(process2::GetegidTest));
+    runner.register(Box::new(process2::ForkWaitTest));
+    runner.register(Box::new(process2::WaitpidNohangTest));
+    runner.register(Box::new(process2::GetrusageTest));
+    runner.register(Box::new(process2::TimesTest));
+    runner.register(Box::new(process2::SetpgidTest));
+    runner.register(Box::new(process2::ExecveBasicTest));
+    runner.register(Box::new(process2::ExecveFalseTest));
+    runner.register(Box::new(process2::GetpriorityTest));
+
+    // Signal (6)
+    runner.register(Box::new(signal::KillSelfTest));
+    runner.register(Box::new(signal::KillInvalidPidTest));
+    runner.register(Box::new(signal::SigactionBasicTest));
+    runner.register(Box::new(signal::SigprocmaskBlockTest));
+    runner.register(Box::new(signal::SigpendingTest));
+    runner.register(Box::new(signal::RaiseTest));
+
+    // Time (5)
+    runner.register(Box::new(time::ClockGettimeRealtimeTest));
+    runner.register(Box::new(time::ClockGettimeMonotonicTest));
+    runner.register(Box::new(time::GettimeofdayTest));
+    runner.register(Box::new(time::NanosleepBasicTest));
+    runner.register(Box::new(time::NanosleepInvalidTest));
 }
