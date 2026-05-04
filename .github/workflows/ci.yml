@@ -1,0 +1,49 @@
+name: syscall-compat-tests CI
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+env:
+  CARGO_TERM_COLOR: always
+
+jobs:
+  test-linux-x86_64:
+    name: Test on Linux x86_64
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install Rust stable
+        uses: dtolnay/rust-toolchain@stable
+      - name: Build
+        run: cargo build --release
+      - name: Run all tests
+        run: |
+          mkdir -p reports
+          cargo run --release --bin sct-run -- --target linux --format all --output reports/linux
+      - name: Upload reports
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: linux-reports
+          path: reports/
+
+  build-riscv64:
+    name: Cross-compile riscv64
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dtolnay/rust-toolchain@stable
+        with:
+          targets: riscv64gc-unknown-linux-gnu
+      - run: sudo apt-get install -y gcc-riscv64-linux-gnu
+      - name: Cross-compile
+        env:
+          CARGO_TARGET_RISCV64GC_UNKNOWN_LINUX_GNU_LINKER: riscv64-linux-gnu-gcc
+        run: cargo build --release --target riscv64gc-unknown-linux-gnu
+      - uses: actions/upload-artifact@v4
+        with:
+          name: sct-run-riscv64
+          path: target/riscv64gc-unknown-linux-gnu/release/sct-run
