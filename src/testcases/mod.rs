@@ -1,4 +1,5 @@
 pub mod dirent;
+pub mod dirent2;
 pub mod errno_edge;
 pub mod file_io;
 pub mod file_io2;
@@ -17,6 +18,9 @@ pub mod resource;
 pub mod signal;
 pub mod memory3;
 pub mod network3;
+pub mod fcntl2;
+pub mod io_uring;
+pub mod misc2;
 pub mod pipe2;
 pub mod time3;
 pub mod process3;
@@ -292,6 +296,37 @@ pub fn register_all(runner: &mut TestRunner) {
     runner.register(Box::new(pipe2::FcntlDupfdTest));
     runner.register(Box::new(pipe2::PipeSizeTest));
     runner.register(Box::new(pipe2::InotifyInitTest));
+        // fcntl advanced (10)
+    runner.register(Box::new(fcntl2::FcntlSetlkReadTest));
+    runner.register(Box::new(fcntl2::FcntlSetlkWriteTest));
+    runner.register(Box::new(fcntl2::FcntlGetflTest));
+    runner.register(Box::new(fcntl2::FcntlSetflTest));
+    runner.register(Box::new(fcntl2::FcntlDupfdCloexecTest));
+    runner.register(Box::new(fcntl2::IoctlTiocgpgrpTest));
+    runner.register(Box::new(fcntl2::IsattyTest));
+    runner.register(Box::new(fcntl2::OpenOsyncTest));
+    runner.register(Box::new(fcntl2::OpenOdirectTest));
+    runner.register(Box::new(fcntl2::IoctlFioclexTest));
+    // io_uring (2)
+    runner.register(Box::new(io_uring::IoUringSetupTest));
+    runner.register(Box::new(io_uring::IoUringSetupZeroEntriesTest));
+    // misc2 (8)
+    runner.register(Box::new(misc2::InotifyWatchTest));
+    runner.register(Box::new(misc2::InotifyDetectCreateTest));
+    runner.register(Box::new(misc2::SyslogReadTest));
+    runner.register(Box::new(misc2::PersonalityGetTest));
+    runner.register(Box::new(misc2::CapgetTest));
+    runner.register(Box::new(misc2::GetcpuTest));
+    runner.register(Box::new(misc2::MembarrierTest));
+    runner.register(Box::new(misc2::RseqRegisterTest));
+        // Directory advanced (8)
+    runner.register(Box::new(dirent2::FchdirTest));
+    runner.register(Box::new(dirent2::FchmodTest));
+    runner.register(Box::new(dirent2::FchmodatTest));
+    runner.register(Box::new(dirent2::LchownTest));
+    runner.register(Box::new(dirent2::UtimesTest));
+    runner.register(Box::new(dirent2::FutimensTest));
+    runner.register(Box::new(dirent2::StatvfsTest));
         // Misc (12)
     runner.register(Box::new(misc::SetenvTest));
     runner.register(Box::new(misc::GetrandomTest));
