@@ -1,5 +1,6 @@
 pub mod dirent;
 pub mod file_io;
+pub mod file_io2;
 pub mod filestat;
 pub mod io_advanced;
 pub mod ipc;
@@ -15,13 +16,14 @@ pub mod resource;
 pub mod signal;
 pub mod socket2;
 pub mod sysinfo;
+pub mod thread;
 pub mod time;
 pub mod time2;
 
 use crate::runner::TestRunner;
 
 pub fn register_all(runner: &mut TestRunner) {
-    // File I/O (16)
+    // File I/O basic (16)
     runner.register(Box::new(file_io::OpenBasicTest));
     runner.register(Box::new(file_io::OpenNonexistentTest));
     runner.register(Box::new(file_io::ReadWriteTest));
@@ -38,6 +40,19 @@ pub fn register_all(runner: &mut TestRunner) {
     runner.register(Box::new(file_io::GetcwdTest));
     runner.register(Box::new(file_io::DupTest));
     runner.register(Box::new(file_io::Dup2Test));
+    // File I/O advanced (12)
+    runner.register(Box::new(file_io2::OpenExclExistsTest));
+    runner.register(Box::new(file_io2::WriteReadonlyFdTest));
+    runner.register(Box::new(file_io2::ReadWriteonlyFdTest));
+    runner.register(Box::new(file_io2::LseekHoleTest));
+    runner.register(Box::new(file_io2::OpenNoentTest));
+    runner.register(Box::new(file_io2::FlockExclusiveTest));
+    runner.register(Box::new(file_io2::FallocateTest));
+    runner.register(Box::new(file_io2::CopyFileRangeTest));
+    runner.register(Box::new(file_io2::LinkatTest));
+    runner.register(Box::new(file_io2::UnlinkatTest));
+    runner.register(Box::new(file_io2::RenameatTest));
+    runner.register(Box::new(file_io2::ReadaheadTest));
     // File stat / permissions (10)
     runner.register(Box::new(filestat::ChmodBasicTest));
     runner.register(Box::new(filestat::TruncateBasicTest));
@@ -127,6 +142,14 @@ pub fn register_all(runner: &mut TestRunner) {
     runner.register(Box::new(process2::ExecveBasicTest));
     runner.register(Box::new(process2::ExecveFalseTest));
     runner.register(Box::new(process2::GetpriorityTest));
+    // Thread (7)
+    runner.register(Box::new(thread::PthreadCreateJoinTest));
+    runner.register(Box::new(thread::PthreadMutexTest));
+    runner.register(Box::new(thread::GettidTest));
+    runner.register(Box::new(thread::PthreadKeyTest));
+    runner.register(Box::new(thread::FutexWakeWaitTest));
+    runner.register(Box::new(thread::PthreadOnceTest));
+    runner.register(Box::new(thread::PthreadCondTest));
     // Resource / scheduling (8)
     runner.register(Box::new(resource::SchedGetschedulerTest));
     runner.register(Box::new(resource::SchedGetparamTest));
