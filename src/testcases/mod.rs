@@ -1,6 +1,7 @@
 pub mod dirent;
 pub mod dirent2;
 pub mod errno_edge;
+pub mod errno_edge2;
 pub mod file_io;
 pub mod file_io2;
 pub mod filestat;
@@ -85,7 +86,18 @@ pub fn register_all(runner: &mut TestRunner) {
     runner.register(Box::new(errno_edge::StatVsLstatTest));
     runner.register(Box::new(errno_edge::FstatStatConsistencyTest));
     runner.register(Box::new(errno_edge::ReadEofTest));
-    // File stat / permissions (10)
+    // Errno edge cases 2 (10)
+    runner.register(Box::new(errno_edge2::MmapNegativeOffsetTest));
+    runner.register(Box::new(errno_edge2::MunmapInvalidAddrTest));
+    runner.register(Box::new(errno_edge2::WaitpidEchildTest));
+    runner.register(Box::new(errno_edge2::MkdirEexistTest));
+    runner.register(Box::new(errno_edge2::RenameSelfTest));
+    runner.register(Box::new(errno_edge2::UnlinkDirTest));
+    runner.register(Box::new(errno_edge2::FtruncateReadonlyTest));
+    runner.register(Box::new(errno_edge2::Pipe2InvalidFlagsTest));
+    runner.register(Box::new(errno_edge2::Dup2SelfTest));
+    runner.register(Box::new(errno_edge2::OpenTruncNowriteTest));
+        // File stat / permissions (10)
     runner.register(Box::new(filestat::ChmodBasicTest));
     runner.register(Box::new(filestat::TruncateBasicTest));
     runner.register(Box::new(filestat::FtruncateTest));
