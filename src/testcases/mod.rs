@@ -16,6 +16,9 @@ pub mod process2;
 pub mod resource;
 pub mod signal;
 pub mod memory3;
+pub mod network3;
+pub mod pipe2;
+pub mod time3;
 pub mod process3;
 pub mod signal2;
 pub mod socket2;
@@ -263,6 +266,32 @@ pub fn register_all(runner: &mut TestRunner) {
     runner.register(Box::new(process3::ProcSelfFdTest));
     runner.register(Box::new(process3::ProcSelfPidTest));
     runner.register(Box::new(process3::ExecveEnvTest));
+        // Network advanced v3 (9)
+    runner.register(Box::new(network3::SoKeepaliveTest));
+    runner.register(Box::new(network3::SoRcvtimeoTest));
+    runner.register(Box::new(network3::TcpNodelayTest));
+    runner.register(Box::new(network3::SoLingerTest));
+    runner.register(Box::new(network3::SoErrorTest));
+    runner.register(Box::new(network3::RecvmsgSendmsgTest));
+    runner.register(Box::new(network3::IpTtlTest));
+    runner.register(Box::new(network3::Accept4Test));
+    runner.register(Box::new(network3::SoBroadcastTest));
+    // Time advanced v3 (8)
+    runner.register(Box::new(time3::ClockThreadCputimeTest));
+    runner.register(Box::new(time3::ClockMonotonicRawTest));
+    runner.register(Box::new(time3::ClockBoottimeTest));
+    runner.register(Box::new(time3::TimerfdRealtimeTest));
+    runner.register(Box::new(time3::TimerfdGettimeTest));
+    runner.register(Box::new(time3::NanosleepAccumulateTest));
+    runner.register(Box::new(time3::ClockNanosleepAbsTest));
+    runner.register(Box::new(time3::ItimerVirtualTest));
+        // Pipe advanced (5)
+    runner.register(Box::new(pipe2::TeeBasicTest));
+    runner.register(Box::new(pipe2::VmspliceTest));
+    runner.register(Box::new(pipe2::PipeBufAtomicTest));
+    runner.register(Box::new(pipe2::FcntlDupfdTest));
+    runner.register(Box::new(pipe2::PipeSizeTest));
+    runner.register(Box::new(pipe2::InotifyInitTest));
         // Misc (12)
     runner.register(Box::new(misc::SetenvTest));
     runner.register(Box::new(misc::GetrandomTest));
