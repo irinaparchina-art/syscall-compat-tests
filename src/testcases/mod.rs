@@ -15,6 +15,8 @@ pub mod process;
 pub mod process2;
 pub mod resource;
 pub mod signal;
+pub mod memory3;
+pub mod process3;
 pub mod signal2;
 pub mod socket2;
 pub mod sysinfo;
@@ -239,7 +241,29 @@ pub fn register_all(runner: &mut TestRunner) {
     runner.register(Box::new(dirent::ChdirTest));
     runner.register(Box::new(dirent::OpenatTest));
     runner.register(Box::new(dirent::MkdiratTest));
-    // Misc (12)
+    // Memory advanced v3 (10)
+    runner.register(Box::new(memory3::MmapFixedTest));
+    runner.register(Box::new(memory3::MmapPopulateTest));
+    runner.register(Box::new(memory3::MprotectRoTest));
+    runner.register(Box::new(memory3::MunmapSubregionTest));
+    runner.register(Box::new(memory3::MmapLargeTest));
+    runner.register(Box::new(memory3::MmapFdClosedTest));
+    runner.register(Box::new(memory3::MadviseSequentialTest));
+    runner.register(Box::new(memory3::MadviseWillneedTest));
+    runner.register(Box::new(memory3::ProcessVmReadvTest));
+    runner.register(Box::new(memory3::UserfaultfdCreateTest));
+    // Process advanced v3 (10)
+    runner.register(Box::new(process3::Wait4Test));
+    runner.register(Box::new(process3::CloneFsTest));
+    runner.register(Box::new(process3::GetresuidTest));
+    runner.register(Box::new(process3::GetresgidTest));
+    runner.register(Box::new(process3::PrctlNameRoundtripTest));
+    runner.register(Box::new(process3::ReadlinkProcSelfExeTest));
+    runner.register(Box::new(process3::ProcSelfMapsTest));
+    runner.register(Box::new(process3::ProcSelfFdTest));
+    runner.register(Box::new(process3::ProcSelfPidTest));
+    runner.register(Box::new(process3::ExecveEnvTest));
+        // Misc (12)
     runner.register(Box::new(misc::SetenvTest));
     runner.register(Box::new(misc::GetrandomTest));
     runner.register(Box::new(misc::GetrandomNonblockTest));
