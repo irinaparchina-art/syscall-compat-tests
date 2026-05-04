@@ -1,10 +1,13 @@
+pub mod dirent;
 pub mod file_io;
 pub mod filestat;
 pub mod io_advanced;
+pub mod ipc;
 pub mod memory;
 pub mod memory2;
 pub mod network;
 pub mod pipe;
+pub mod poll_select;
 pub mod process;
 pub mod process2;
 pub mod signal;
@@ -87,6 +90,17 @@ pub fn register_all(runner: &mut TestRunner) {
     runner.register(Box::new(pipe::FcntlSetNonblockTest));
     runner.register(Box::new(pipe::ReadNonblockTest));
 
+    // Poll / select / epoll (9)
+    runner.register(Box::new(poll_select::PollWriteReadyTest));
+    runner.register(Box::new(poll_select::PollTimeoutTest));
+    runner.register(Box::new(poll_select::PollReadReadyTest));
+    runner.register(Box::new(poll_select::PollInvalidFdTest));
+    runner.register(Box::new(poll_select::SelectWriteReadyTest));
+    runner.register(Box::new(poll_select::SelectTimeoutTest));
+    runner.register(Box::new(poll_select::EpollCreateTest));
+    runner.register(Box::new(poll_select::EpollWaitTest));
+    runner.register(Box::new(poll_select::EpollCtlDelTest));
+
     // Process (6)
     runner.register(Box::new(process::GetpidTest));
     runner.register(Box::new(process::GetppidTest));
@@ -123,4 +137,23 @@ pub fn register_all(runner: &mut TestRunner) {
     runner.register(Box::new(time::GettimeofdayTest));
     runner.register(Box::new(time::NanosleepBasicTest));
     runner.register(Box::new(time::NanosleepInvalidTest));
+
+    // IPC (7)
+    runner.register(Box::new(ipc::ShmgetCreateTest));
+    runner.register(Box::new(ipc::ShmatShmdetTest));
+    runner.register(Box::new(ipc::ShmctlStatTest));
+    runner.register(Box::new(ipc::MsggetCreateTest));
+    runner.register(Box::new(ipc::MsgsndRcvTest));
+    runner.register(Box::new(ipc::SemgetCreateTest));
+    runner.register(Box::new(ipc::SemopTest));
+
+    // Directory (8)
+    runner.register(Box::new(dirent::OpendirTest));
+    runner.register(Box::new(dirent::ReaddirTest));
+    runner.register(Box::new(dirent::ReaddirCreatedFilesTest));
+    runner.register(Box::new(dirent::RewinddirTest));
+    runner.register(Box::new(dirent::Getdents64Test));
+    runner.register(Box::new(dirent::ChdirTest));
+    runner.register(Box::new(dirent::OpenatTest));
+    runner.register(Box::new(dirent::MkdiratTest));
 }
