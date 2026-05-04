@@ -525,11 +525,11 @@ impl SyscallTest for GetcwdTest {
         "getcwd() should return a non-empty path starting with '/'"
     }
     fn run(&self) -> TestResult {
-        let mut buf = vec![0i8; 4096];
+        let mut buf = vec![0u8; 4096];
         let (ret, errno_val, dur) = timed_syscall!({
-            unsafe { getcwd(buf.as_mut_ptr(), buf.len()) as i64 }
+            unsafe { getcwd(buf.as_mut_ptr() as *mut libc::c_char, buf.len()) as i64 }
         });
-        let status = if ret != 0 && buf[0] == b'/' as i8 {
+        let status = if ret != 0 && buf[0] == b'/' {
             TestStatus::Pass
         } else if errno_val == ENOSYS as i32 {
             TestStatus::Unimplemented

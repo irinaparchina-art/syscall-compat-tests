@@ -202,11 +202,11 @@ impl SyscallTest for GethostnameTest {
     fn description(&self) -> &str { "gethostname() should return a non-empty hostname string" }
     fn run(&self) -> TestResult {
         let start = Instant::now();
-        let mut buf = vec![0i8; 256];
-        let ret = unsafe { gethostname(buf.as_mut_ptr(), buf.len()) };
+        let mut buf = vec![0u8; 256];
+        let ret = unsafe { gethostname(buf.as_mut_ptr() as *mut libc::c_char, buf.len()) };
         let errno_val = unsafe { *libc::__errno_location() };
         let dur = start.elapsed().as_micros() as u64;
-        let len = buf.iter().take_while(|&&c| c != 0).count();
+        let len = buf.iter().take_while(|c| **c != 0).count();
         let s = if ret == 0 && len > 0 { TestStatus::Pass }
         else if errno_val == ENOSYS as i32 { TestStatus::Unimplemented }
         else { TestStatus::Fail { expected_ret: 0, actual_ret: ret as i64, expected_errno: None, actual_errno: Some(errno_val) } };

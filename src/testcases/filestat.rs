@@ -214,12 +214,12 @@ impl SyscallTest for ReadlinkTest {
                 TestStatus::Error("open failed".into()), start.elapsed().as_micros() as u64);
         }
         unsafe { close(fd); unlink(link.as_ptr()); symlink(target.as_ptr(), link.as_ptr()); }
-        let mut buf = vec![0i8; 256];
-        let ret = unsafe { readlink(link.as_ptr(), buf.as_mut_ptr(), buf.len()) };
+        let mut buf = vec![0u8; 256];
+        let ret = unsafe { readlink(link.as_ptr(), buf.as_mut_ptr() as *mut libc::c_char, buf.len()) };
         let errno_val = unsafe { *libc::__errno_location() };
         unsafe { unlink(link.as_ptr()); unlink(target.as_ptr()); }
         let dur = start.elapsed().as_micros() as u64;
-        let read_path: String = buf[..ret.max(0) as usize].iter().map(|&c| c as u8 as char).collect();
+        let read_path: String = buf[..ret.max(0) as usize].iter().map(|&c| c as char).collect();
         let status = if ret > 0 && read_path == "/tmp/sct_rl_target.txt" { TestStatus::Pass }
         else if errno_val == ENOSYS as i32 { TestStatus::Unimplemented }
         else { TestStatus::Fail { expected_ret: target.as_bytes().len() as i64, actual_ret: ret as i64, expected_errno: None, actual_errno: Some(errno_val) } };

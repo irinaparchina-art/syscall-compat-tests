@@ -176,16 +176,16 @@ impl SyscallTest for ChdirTest {
     fn run(&self) -> TestResult {
         let start = Instant::now();
         // Save current dir
-        let mut orig = vec![0i8; 4096];
-        unsafe { getcwd(orig.as_mut_ptr(), orig.len()); }
+        let mut orig = vec![0u8; 4096];
+        unsafe { getcwd(orig.as_mut_ptr() as *mut libc::c_char, orig.len()); }
         let tmp = CString::new("/tmp").unwrap();
         let ret = unsafe { chdir(tmp.as_ptr()) };
         let errno_val = unsafe { *libc::__errno_location() };
-        let mut cwd = vec![0i8; 4096];
-        unsafe { getcwd(cwd.as_mut_ptr(), cwd.len()); }
+        let mut cwd = vec![0u8; 4096];
+        unsafe { getcwd(cwd.as_mut_ptr() as *mut libc::c_char, cwd.len()); }
         // Restore
-        unsafe { chdir(orig.as_ptr()); }
-        let cwd_str: String = cwd.iter().take_while(|&&c| c != 0).map(|&c| c as u8 as char).collect();
+        unsafe { chdir(orig.as_ptr() as *const libc::c_char); }
+        let cwd_str: String = cwd.iter().take_while(|&&c| c != 0).map(|&c| c as char).collect();
         let dur = start.elapsed().as_micros() as u64;
         let s = if ret == 0 && cwd_str == "/tmp" { TestStatus::Pass }
         else if errno_val == ENOSYS as i32 { TestStatus::Unimplemented }
