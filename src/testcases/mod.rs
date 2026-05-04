@@ -10,8 +10,11 @@ pub mod pipe;
 pub mod poll_select;
 pub mod process;
 pub mod process2;
+pub mod resource;
 pub mod signal;
+pub mod sysinfo;
 pub mod time;
+pub mod time2;
 
 use crate::runner::TestRunner;
 
@@ -33,7 +36,6 @@ pub fn register_all(runner: &mut TestRunner) {
     runner.register(Box::new(file_io::GetcwdTest));
     runner.register(Box::new(file_io::DupTest));
     runner.register(Box::new(file_io::Dup2Test));
-
     // File stat / permissions (10)
     runner.register(Box::new(filestat::ChmodBasicTest));
     runner.register(Box::new(filestat::TruncateBasicTest));
@@ -45,7 +47,6 @@ pub fn register_all(runner: &mut TestRunner) {
     runner.register(Box::new(filestat::ReadlinkTest));
     runner.register(Box::new(filestat::HardlinkTest));
     runner.register(Box::new(filestat::StatfsTest));
-
     // Advanced I/O (8)
     runner.register(Box::new(io_advanced::WritevBasicTest));
     runner.register(Box::new(io_advanced::ReadvBasicTest));
@@ -55,14 +56,12 @@ pub fn register_all(runner: &mut TestRunner) {
     runner.register(Box::new(io_advanced::SpliceBasicTest));
     runner.register(Box::new(io_advanced::FsyncTest));
     runner.register(Box::new(io_advanced::FdatasyncTest));
-
     // Memory (5)
     runner.register(Box::new(memory::BrkBasicTest));
     runner.register(Box::new(memory::MmapAnonTest));
     runner.register(Box::new(memory::MmapReadWriteTest));
     runner.register(Box::new(memory::MunmapTest));
     runner.register(Box::new(memory::MprotectTest));
-
     // Memory advanced (6)
     runner.register(Box::new(memory2::MmapFileTest));
     runner.register(Box::new(memory2::MsyncTest));
@@ -70,7 +69,6 @@ pub fn register_all(runner: &mut TestRunner) {
     runner.register(Box::new(memory2::MlockTest));
     runner.register(Box::new(memory2::MmapOffsetTest));
     runner.register(Box::new(memory2::MremapTest));
-
     // Network (9)
     runner.register(Box::new(network::SocketTcpCreateTest));
     runner.register(Box::new(network::SocketUdpCreateTest));
@@ -81,7 +79,6 @@ pub fn register_all(runner: &mut TestRunner) {
     runner.register(Box::new(network::GetsocknameTest));
     runner.register(Box::new(network::SetsockoptReuseTest));
     runner.register(Box::new(network::LoopbackConnectTest));
-
     // Pipe / fcntl (6)
     runner.register(Box::new(pipe::PipeBasicTest));
     runner.register(Box::new(pipe::PipeReadEofTest));
@@ -89,7 +86,6 @@ pub fn register_all(runner: &mut TestRunner) {
     runner.register(Box::new(pipe::FcntlGetFdTest));
     runner.register(Box::new(pipe::FcntlSetNonblockTest));
     runner.register(Box::new(pipe::ReadNonblockTest));
-
     // Poll / select / epoll (9)
     runner.register(Box::new(poll_select::PollWriteReadyTest));
     runner.register(Box::new(poll_select::PollTimeoutTest));
@@ -100,7 +96,6 @@ pub fn register_all(runner: &mut TestRunner) {
     runner.register(Box::new(poll_select::EpollCreateTest));
     runner.register(Box::new(poll_select::EpollWaitTest));
     runner.register(Box::new(poll_select::EpollCtlDelTest));
-
     // Process (6)
     runner.register(Box::new(process::GetpidTest));
     runner.register(Box::new(process::GetppidTest));
@@ -108,7 +103,6 @@ pub fn register_all(runner: &mut TestRunner) {
     runner.register(Box::new(process::GetgidTest));
     runner.register(Box::new(process::UmaskTest));
     runner.register(Box::new(process::ExitCodeTest));
-
     // Process advanced (12)
     runner.register(Box::new(process2::GetpgrpTest));
     runner.register(Box::new(process2::GetsidTest));
@@ -122,7 +116,15 @@ pub fn register_all(runner: &mut TestRunner) {
     runner.register(Box::new(process2::ExecveBasicTest));
     runner.register(Box::new(process2::ExecveFalseTest));
     runner.register(Box::new(process2::GetpriorityTest));
-
+    // Resource / scheduling (8)
+    runner.register(Box::new(resource::SchedGetschedulerTest));
+    runner.register(Box::new(resource::SchedGetparamTest));
+    runner.register(Box::new(resource::SchedYieldTest));
+    runner.register(Box::new(resource::SchedPriorityRangeTest));
+    runner.register(Box::new(resource::SetpriorityTest));
+    runner.register(Box::new(resource::PrlimitGetTest));
+    runner.register(Box::new(resource::MincoreTest));
+    runner.register(Box::new(resource::GetloadavgTest));
     // Signal (6)
     runner.register(Box::new(signal::KillSelfTest));
     runner.register(Box::new(signal::KillInvalidPidTest));
@@ -130,14 +132,32 @@ pub fn register_all(runner: &mut TestRunner) {
     runner.register(Box::new(signal::SigprocmaskBlockTest));
     runner.register(Box::new(signal::SigpendingTest));
     runner.register(Box::new(signal::RaiseTest));
-
+    // Sysinfo (11)
+    runner.register(Box::new(sysinfo::UnameTest));
+    runner.register(Box::new(sysinfo::SysinfoTest));
+    runner.register(Box::new(sysinfo::GetrlimitNofileTest));
+    runner.register(Box::new(sysinfo::GetrlimitStackTest));
+    runner.register(Box::new(sysinfo::SetrlimitTest));
+    runner.register(Box::new(sysinfo::GetpagesizeTest));
+    runner.register(Box::new(sysinfo::SysconfNprocsTest));
+    runner.register(Box::new(sysinfo::SysconfPageSizeTest));
+    runner.register(Box::new(sysinfo::GetgroupsTest));
+    runner.register(Box::new(sysinfo::GethostnameTest));
+    runner.register(Box::new(sysinfo::ProcSelfStatusTest));
     // Time (5)
     runner.register(Box::new(time::ClockGettimeRealtimeTest));
     runner.register(Box::new(time::ClockGettimeMonotonicTest));
     runner.register(Box::new(time::GettimeofdayTest));
     runner.register(Box::new(time::NanosleepBasicTest));
     runner.register(Box::new(time::NanosleepInvalidTest));
-
+    // Time advanced (7)
+    runner.register(Box::new(time2::ClockGetresRealtimeTest));
+    runner.register(Box::new(time2::ClockGetresMonotonicTest));
+    runner.register(Box::new(time2::ClockGettimeCputimeTest));
+    runner.register(Box::new(time2::MonotonicNonDecreasingTest));
+    runner.register(Box::new(time2::SetitimerTest));
+    runner.register(Box::new(time2::TimeBasicTest));
+    runner.register(Box::new(time2::ClockNanosleepTest));
     // IPC (7)
     runner.register(Box::new(ipc::ShmgetCreateTest));
     runner.register(Box::new(ipc::ShmatShmdetTest));
@@ -146,7 +166,6 @@ pub fn register_all(runner: &mut TestRunner) {
     runner.register(Box::new(ipc::MsgsndRcvTest));
     runner.register(Box::new(ipc::SemgetCreateTest));
     runner.register(Box::new(ipc::SemopTest));
-
     // Directory (8)
     runner.register(Box::new(dirent::OpendirTest));
     runner.register(Box::new(dirent::ReaddirTest));
