@@ -63,4 +63,4 @@ cargo run --bin sct-run -- --target starry --format all --output report
 
 ## License
 
-MIT — [华中科技大学开源俱乐部](https://hust.openatom.club/)
+MIT
