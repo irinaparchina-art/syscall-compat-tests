@@ -27,7 +27,9 @@ pub mod time3;
 pub mod process3;
 pub mod signal2;
 pub mod socket2;
+pub mod compat_check;
 pub mod sysinfo;
+pub mod sysinfo2;
 pub mod thread;
 pub mod time;
 pub mod time2;
@@ -229,7 +231,28 @@ pub fn register_all(runner: &mut TestRunner) {
     runner.register(Box::new(sysinfo::GetgroupsTest));
     runner.register(Box::new(sysinfo::GethostnameTest));
     runner.register(Box::new(sysinfo::ProcSelfStatusTest));
-    // Time (5)
+    // Sysinfo advanced (10)
+    runner.register(Box::new(sysinfo2::ProcCmdlineTest));
+    runner.register(Box::new(sysinfo2::ProcStatTest));
+    runner.register(Box::new(sysinfo2::ProcMeminfoTest));
+    runner.register(Box::new(sysinfo2::ProcCpuinfoTest));
+    runner.register(Box::new(sysinfo2::ProcUptimeTest));
+    runner.register(Box::new(sysinfo2::SysconfClkTckTest));
+    runner.register(Box::new(sysinfo2::SysconfOpenMaxTest));
+    runner.register(Box::new(sysinfo2::SysconfChildMaxTest));
+    runner.register(Box::new(sysinfo2::GetrlimitNprocTest));
+    runner.register(Box::new(sysinfo2::GetrlimitAsTest));
+    // Compatibility checks (9)
+    runner.register(Box::new(compat_check::ErrnoResetTest));
+    runner.register(Box::new(compat_check::WriteExactCountTest));
+    runner.register(Box::new(compat_check::ReadNoEagainTest));
+    runner.register(Box::new(compat_check::ForkCowTest));
+    runner.register(Box::new(compat_check::OpenModeUmaskTest));
+    runner.register(Box::new(compat_check::OffsetAdvanceTest));
+    runner.register(Box::new(compat_check::GetpidConsistencyTest));
+    runner.register(Box::new(compat_check::MonotonicOnlyIncreaseTest));
+    runner.register(Box::new(compat_check::MmapZeroInitTest));
+        // Time (5)
     runner.register(Box::new(time::ClockGettimeRealtimeTest));
     runner.register(Box::new(time::ClockGettimeMonotonicTest));
     runner.register(Box::new(time::GettimeofdayTest));
