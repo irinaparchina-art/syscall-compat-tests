@@ -29,6 +29,8 @@ pub mod signal2;
 pub mod socket2;
 pub mod compat_check;
 pub mod final_tests;
+pub mod network4;
+pub mod process4;
 pub mod sysinfo;
 pub mod sysinfo2;
 pub mod thread;
@@ -232,7 +234,25 @@ pub fn register_all(runner: &mut TestRunner) {
     runner.register(Box::new(sysinfo::GetgroupsTest));
     runner.register(Box::new(sysinfo::GethostnameTest));
     runner.register(Box::new(sysinfo::ProcSelfStatusTest));
-    // Final tests (12)
+    // Network advanced v4 (8)
+    runner.register(Box::new(network4::SocketNonblockTest));
+    runner.register(Box::new(network4::SocketCloexecTest));
+    runner.register(Box::new(network4::UdpBindAutoPortTest));
+    runner.register(Box::new(network4::SoReuseportTest));
+    runner.register(Box::new(network4::InAddrLoopbackTest));
+    runner.register(Box::new(network4::SoSndbufTest));
+    runner.register(Box::new(network4::Ipv6SocketTest));
+    runner.register(Box::new(network4::RecvfromNullAddrTest));
+    // Process advanced v4 (8)
+    runner.register(Box::new(process4::ForkPpidTest));
+    runner.register(Box::new(process4::EnvironTest));
+    runner.register(Box::new(process4::PutenvTest));
+    runner.register(Box::new(process4::ClearenvTest));
+    runner.register(Box::new(process4::SetsidTest));
+    runner.register(Box::new(process4::AlarmTest));
+    runner.register(Box::new(process4::PauseWithSignalTest));
+    runner.register(Box::new(process4::GetpgidTest));
+        // Final tests (12)
     runner.register(Box::new(final_tests::Pread64OffsetTest));
     runner.register(Box::new(final_tests::Pwrite64OffsetTest));
     runner.register(Box::new(final_tests::DevNullWriteTest));
