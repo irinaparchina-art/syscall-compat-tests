@@ -28,6 +28,7 @@ pub mod process3;
 pub mod signal2;
 pub mod socket2;
 pub mod compat_check;
+pub mod final_tests;
 pub mod sysinfo;
 pub mod sysinfo2;
 pub mod thread;
@@ -231,7 +232,21 @@ pub fn register_all(runner: &mut TestRunner) {
     runner.register(Box::new(sysinfo::GetgroupsTest));
     runner.register(Box::new(sysinfo::GethostnameTest));
     runner.register(Box::new(sysinfo::ProcSelfStatusTest));
-    // Sysinfo advanced (10)
+    // Final tests (12)
+    runner.register(Box::new(final_tests::Pread64OffsetTest));
+    runner.register(Box::new(final_tests::Pwrite64OffsetTest));
+    runner.register(Box::new(final_tests::DevNullWriteTest));
+    runner.register(Box::new(final_tests::DevNullReadTest));
+    runner.register(Box::new(final_tests::DevZeroReadTest));
+    runner.register(Box::new(final_tests::IndependentFileOffsetTest));
+    runner.register(Box::new(final_tests::DupSharedOffsetTest));
+    runner.register(Box::new(final_tests::PidNotEqualPpidTest));
+    runner.register(Box::new(final_tests::SeekEndTest));
+    runner.register(Box::new(final_tests::MultiForkTest));
+    runner.register(Box::new(final_tests::StatNlinkTest));
+    runner.register(Box::new(final_tests::StatSizeWrittenTest));
+    runner.register(Box::new(final_tests::UidEqualsEuidTest));
+        // Sysinfo advanced (10)
     runner.register(Box::new(sysinfo2::ProcCmdlineTest));
     runner.register(Box::new(sysinfo2::ProcStatTest));
     runner.register(Box::new(sysinfo2::ProcMeminfoTest));
