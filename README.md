@@ -18,7 +18,7 @@ cargo build --release
 cargo run --release --bin sct-run -- --target linux --format all --output report
 ```
 
-## Coverage (332 tests, 10520 lines)
+## Coverage (360 tests, 11655 lines)
 
 | Module | Tests | Key Syscalls |
 |--------|-------|-------------|

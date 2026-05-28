@@ -159,7 +159,7 @@ cat /tmp/report.md
 
 使用 GitHub Actions 实现全自动化测试，每次代码提交自动触发：
 
-- **Test on Linux x86_64**：运行全部 332 个测试，当前 331 Pass / 1 Unimplemented / 0 Fail
+- **Test on Linux x86_64**：运行全部 360 个测试，当前 331 Pass / 1 Unimplemented / 0 Fail
 - **Cross-compile riscv64**：验证可成功交叉编译到 riscv64gc-unknown-linux-gnu 目标
 
 CI 配置文件：`.github/workflows/ci.yml`
@@ -197,9 +197,9 @@ CI 配置文件：`.github/workflows/ci.yml`
 
 | 指标 | 数值 |
 |------|------|
-| 代码行数 | 10,520 行 |
-| 测试用例 | 332 个 |
-| 测试模块 | 32 个 |
+| 代码行数 | 11,655 行 |
+| 测试用例 | 360 个 |
+| 测试模块 | 35 个 |
 | CI 通过 | 331 Pass / 1 Unimplemented / 0 Fail |
 | GitHub Star | 5 |
 | Commit 数量 | 24 |
