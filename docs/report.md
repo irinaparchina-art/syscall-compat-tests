@@ -112,7 +112,7 @@ pub enum TestStatus {
 | Time | 20 | clock_gettime/timerfd/nanosleep |
 | Directory | 23 | opendir/readdir/chdir/fchmod |
 | Misc | 106 | inotify/getrandom/memfd/prctl/io_uring |
-| **合计** | **332** | **100+ syscall** |
+| **合计** | **360** | **120+ syscall** |
 
 ### 3.4 核心特性
 
