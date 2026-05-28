@@ -34,6 +34,9 @@ cargo run --release --bin sct-run -- --target linux --format all --output report
 | Epoll | 10 | epoll_create1/epoll_ctl/epoll_wait/... |
 | Scheduler | 6 | sched_yield/sched_getaffinity/sched_setaffinity/... |
 | File Ops Ext | 12 | umask/dup3/chown/fchown/faccessat/fstatat/... |
+| Epoll | 10 | epoll_create1/epoll_ctl/epoll_wait/... |
+| Scheduler | 6 | sched_yield/sched_getaffinity/... |
+| File Ops Ext | 12 | umask/dup3/chown/faccessat/fstatat/... |
 | Misc | 106 | inotify/getrandom/memfd/prctl/... |
 
 ## Cross-compile to RISC-V
