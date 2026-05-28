@@ -15,7 +15,7 @@ rCore-OS 生态中的 StarryOS、ArceOS 等候选内核正在努力实现 Linux 
 核心目录结构：
 - src/runner/        测试框架核心：SyscallTest trait、TestResult、TestRunner
 - src/reporter/      报告生成：Console、JSON、Markdown 三种输出格式
-- src/testcases/     测试用例，32 个模块，332 个用例
+- src/testcases/     测试用例，35 个模块，360 个用例
 - .github/workflows/ CI：Linux x86_64 测试 + RISC-V 交叉编译
 
 ## 核心抽象
@@ -78,5 +78,5 @@ rCore-OS 生态中的 StarryOS、ArceOS 等候选内核正在努力实现 Linux 
 
 ## CI 集成
 
-- Test on Linux x86_64：每次 push 自动运行全部 332 个测试
+- Test on Linux x86_64：每次 push 自动运行全部 360 个测试
 - Cross-compile riscv64：验证可成功交叉编译到 RISC-V 目标
