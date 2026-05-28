@@ -31,6 +31,9 @@ cargo run --release --bin sct-run -- --target linux --format all --output report
 | IPC | 7 | shmget/msgget/semget/msgsnd/... |
 | Time | 20 | clock_gettime/timerfd/nanosleep/... |
 | Dir/FS | 23 | opendir/readdir/chdir/fchmod/... |
+| Epoll | 10 | epoll_create1/epoll_ctl/epoll_wait/... |
+| Scheduler | 6 | sched_yield/sched_getaffinity/sched_setaffinity/... |
+| File Ops Ext | 12 | umask/dup3/chown/fchown/faccessat/fstatat/... |
 | Misc | 106 | inotify/getrandom/memfd/prctl/... |
 
 ## Cross-compile to RISC-V
