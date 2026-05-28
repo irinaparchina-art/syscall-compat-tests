@@ -1,5 +1,6 @@
 pub mod dirent;
 pub mod dirent2;
+pub mod epoll;
 pub mod errno_edge;
 pub mod errno_edge2;
 pub mod file_io;
@@ -36,6 +37,8 @@ pub mod sysinfo2;
 pub mod thread;
 pub mod time;
 pub mod time2;
+pub mod sched;
+pub mod fileops_ext;
 
 use crate::runner::TestRunner;
 
@@ -410,4 +413,35 @@ pub fn register_all(runner: &mut TestRunner) {
     runner.register(Box::new(misc::EventfdTest));
     runner.register(Box::new(misc::TimerfdTest));
     runner.register(Box::new(misc::PrctlGetNameTest));
+    // Epoll (10)
+    runner.register(Box::new(epoll::EpollCreate1BasicTest));
+    runner.register(Box::new(epoll::EpollCreate1CloexecTest));
+    runner.register(Box::new(epoll::EpollCtlAddTest));
+    runner.register(Box::new(epoll::EpollCtlDelTest));
+    runner.register(Box::new(epoll::EpollCtlModTest));
+    runner.register(Box::new(epoll::EpollCtlBadFdTest));
+    runner.register(Box::new(epoll::EpollWaitReadyTest));
+    runner.register(Box::new(epoll::EpollWaitTimeoutTest));
+    runner.register(Box::new(epoll::EpollCtlDuplicateTest));
+    runner.register(Box::new(epoll::EpollWaitEpolloutTest));
+    // Scheduler (6)
+    runner.register(Box::new(sched::SchedYieldTest));
+    runner.register(Box::new(sched::SchedGetaffinityTest));
+    runner.register(Box::new(sched::SchedGetaffinityBadPidTest));
+    runner.register(Box::new(sched::SchedSetaffinitySelfTest));
+    runner.register(Box::new(sched::SchedGetschedulerTest));
+    runner.register(Box::new(sched::SchedGetparamTest));
+    // Extended file ops (14)
+    runner.register(Box::new(fileops_ext::UmaskGetTest));
+    runner.register(Box::new(fileops_ext::UmaskRoundtripTest));
+    runner.register(Box::new(fileops_ext::Dup3BasicTest));
+    runner.register(Box::new(fileops_ext::Dup3CloexecTest));
+    runner.register(Box::new(fileops_ext::Dup3SameFdTest));
+    runner.register(Box::new(fileops_ext::ChownSelfTest));
+    runner.register(Box::new(fileops_ext::FchownSelfTest));
+    runner.register(Box::new(fileops_ext::ChownNoentTest));
+    runner.register(Box::new(fileops_ext::FaccessatReadTest));
+    runner.register(Box::new(fileops_ext::FaccessatNoentTest));
+    runner.register(Box::new(fileops_ext::FstatatBasicTest));
+    runner.register(Box::new(fileops_ext::FstatatNoentTest));
 }
