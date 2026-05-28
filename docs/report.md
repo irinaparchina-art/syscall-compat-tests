@@ -29,44 +29,47 @@ syscall-compat-tests/
 │   │   └── mod.rs     # SyscallTest trait、TestResult、TestRunner
 │   ├── reporter/      # 报告生成模块
 │   │   └── mod.rs     # Console、JSON、Markdown 三种输出格式
-│   └── testcases/     # 32 个测试模块，332 个测试用例
-│       ├── file_io.rs       # 基础文件 I/O
-│       ├── file_io2.rs      # 高级文件 I/O
-│       ├── memory.rs        # 内存管理基础
-│       ├── memory2.rs       # 高级内存操作
-│       ├── memory3.rs       # mmap 边界测试
-│       ├── network.rs       # 网络基础
-│       ├── network3.rs      # 网络高级选项
-│       ├── network4.rs      # 网络边界测试
-│       ├── signal.rs        # 信号基础
-│       ├── signal2.rs       # 信号高级
-│       ├── process.rs       # 进程基础
-│       ├── process2.rs      # 进程高级
-│       ├── process3.rs      # /proc 文件系统
-│       ├── process4.rs      # 环境变量、alarm
-│       ├── thread.rs        # 线程与 futex
-│       ├── ipc.rs           # 进程间通信
-│       ├── time.rs          # 时间基础
-│       ├── time2.rs         # 时间高级
-│       ├── time3.rs         # timerfd、clock 变体
-│       ├── dirent.rs        # 目录遍历
-│       ├── dirent2.rs       # 目录高级操作
-│       ├── pipe.rs          # 管道基础
-│       ├── pipe2.rs         # 管道高级
+│   └── testcases/     # 35 个测试模块，360 个测试用例
+│       ├── file_io.rs       # 基础文件 I/O（16 个测试）
+│       ├── file_io2.rs      # 高级文件 I/O（12 个测试）
+│       ├── memory.rs        # 内存管理基础（5 个测试）
+│       ├── memory2.rs       # 高级内存操作（6 个测试）
+│       ├── memory3.rs       # mmap 边界测试（10 个测试）
+│       ├── network.rs       # 网络基础（9 个测试）
+│       ├── network3.rs      # 网络高级选项（9 个测试）
+│       ├── network4.rs      # 网络边界测试（8 个测试）
+│       ├── signal.rs        # 信号基础（10 个测试）
+│       ├── signal2.rs       # 信号高级（8 个测试）
+│       ├── process.rs       # 进程基础（10 个测试）
+│       ├── process2.rs      # 进程高级（10 个测试）
+│       ├── process3.rs      # /proc 文件系统（10 个测试）
+│       ├── process4.rs      # 环境变量、alarm（12 个测试）
+│       ├── thread.rs        # 线程与 futex（7 个测试）
+│       ├── ipc.rs           # 进程间通信（7 个测试）
+│       ├── time.rs          # 时间基础（5 个测试）
+│       ├── time2.rs         # 时间高级（7 个测试）
+│       ├── time3.rs         # timerfd、clock 变体（8 个测试）
+│       ├── dirent.rs        # 目录遍历（8 个测试）
+│       ├── dirent2.rs       # 目录高级操作（7 个测试）
+│       ├── pipe.rs          # 管道基础（6 个测试）
+│       ├── pipe2.rs         # 管道高级（6 个测试）
 │       ├── poll_select.rs   # I/O 多路复用
-│       ├── io_advanced.rs   # readv/writev/splice
-│       ├── io_uring.rs      # io_uring 接口
-│       ├── fcntl2.rs        # fcntl 高级
-│       ├── filestat.rs      # 文件属性
+│       ├── io_advanced.rs   # readv/writev/splice（8 个测试）
+│       ├── io_uring.rs      # io_uring 接口（2 个测试）
+│       ├── fcntl2.rs        # fcntl 高级（10 个测试）
+│       ├── filestat.rs      # 文件属性（10 个测试）
 │       ├── sysinfo.rs       # 系统信息
-│       ├── sysinfo2.rs      # /proc 系统信息
+│       ├── sysinfo2.rs      # /proc 系统信息（10 个测试）
 │       ├── resource.rs      # 资源限制与调度
-│       ├── misc.rs          # 杂项 syscall
-│       ├── misc2.rs         # inotify、capability
-│       ├── errno_edge.rs    # errno 边界测试
-│       ├── errno_edge2.rs   # 更多边界测试
-│       ├── compat_check.rs  # 兼容性核心验证
-│       └── final_tests.rs   # 综合测试
+│       ├── misc.rs          # 杂项 syscall（12 个测试）
+│       ├── misc2.rs         # inotify、capability（8 个测试）
+│       ├── errno_edge.rs    # errno 边界测试（20 个测试）
+│       ├── errno_edge2.rs   # 更多边界测试（10 个测试）
+│       ├── compat_check.rs  # 兼容性核心验证（9 个测试）
+│       ├── final_tests.rs   # 综合测试（12 个测试）
+│       ├── epoll.rs         # epoll I/O 多路复用（10 个测试）
+│       ├── sched.rs         # 调度器相关（6 个测试）
+│       └── fileops_ext.rs   # 扩展文件操作（12 个测试）
 ├── docs/                    # 设计文档与技术报告
 └── .github/workflows/
     └── ci.yml               # CI：Linux x86_64 + RISC-V 交叉编译
@@ -104,13 +107,16 @@ pub enum TestStatus {
 |------|--------|-------------------|
 | File I/O | 48 | open/read/write/stat/lseek/dup/fcntl |
 | Memory | 27 | mmap/munmap/mprotect/madvise/mremap |
-| Network | 34 | socket/bind/connect/send/recv/epoll |
+| Network | 34 | socket/bind/connect/send/recv |
 | Signal | 18 | kill/sigaction/sigprocmask/signalfd |
 | Process | 42 | fork/exec/wait/clone/getpid/setsid |
 | Thread | 7 | pthread/futex/gettid/mutex/cond |
 | IPC | 7 | shmget/msgget/semget/msgsnd |
 | Time | 20 | clock_gettime/timerfd/nanosleep |
 | Directory | 23 | opendir/readdir/chdir/fchmod |
+| Epoll | 10 | epoll_create1/epoll_ctl/epoll_wait |
+| Scheduler | 6 | sched_yield/sched_getaffinity/sched_setaffinity |
+| File Ops Ext | 12 | umask/dup3/chown/fchown/faccessat/fstatat |
 | Misc | 106 | inotify/getrandom/memfd/prctl/io_uring |
 | **合计** | **360** | **120+ syscall** |
 
@@ -121,18 +127,26 @@ pub enum TestStatus {
 - `lseek()` 使用非法 whence 必须返回 `EINVAL`
 - `write()` 写只读 fd 必须返回 `EBADF`
 - `open()` 以 `O_WRONLY` 打开目录必须返回 `EISDIR`
+- `chown()` 操作不存在文件必须返回 `ENOENT`
+- `dup3()` 相同 fd 必须返回 `EINVAL`
+- `epoll_ctl()` 重复添加 fd 必须返回 `EEXIST`
 
 **边界条件测试：** 专门测试边界行为：
 - `mmap()` 零长度映射的 EINVAL 处理
 - `pipe2()` 非法 flags 的拒绝
 - 符号链接循环的 ELOOP 检测
 - 超长路径名的 ENAMETOOLONG 处理
+- `sched_getaffinity()` 对不存在 PID 返回 ESRCH
+- `epoll_ctl()` 对无效 fd 返回 EBADF
 
 **POSIX 语义保证验证：**
 - 匿名 mmap 页面必须零初始化
 - fork() 子进程具有独立内存副本（COW 语义）
 - CLOCK_MONOTONIC 单调不减
 - dup() 后两个 fd 共享文件偏移量
+- umask() 设置后可正确 roundtrip
+- epoll_wait 超时返回 0
+- sched_yield() 成功返回 0
 
 ## 四、RISC-V 交叉编译
 
@@ -159,39 +173,36 @@ cat /tmp/report.md
 
 使用 GitHub Actions 实现全自动化测试，每次代码提交自动触发：
 
-- **Test on Linux x86_64**：运行全部 360 个测试，当前 331 Pass / 1 Unimplemented / 0 Fail
+- **Test on Linux x86_64**：运行全部 360 个测试，当前 359 Pass / 1 Unimplemented / 0 Fail
 - **Cross-compile riscv64**：验证可成功交叉编译到 riscv64gc-unknown-linux-gnu 目标
 
 CI 配置文件：`.github/workflows/ci.yml`
 
 ## 六、对 tgoskits 的贡献
 
-向 rcore-os/tgoskits 提交 PR #995，在 `test-suit/starryos/syscall/` 目录下添加 `syscall_compat_test.c`。
+向 rcore-os/tgoskits 提交 PR #995，在 `test-suit/starryos/normal/qemu-smp1/syscall/test-compat/c/` 目录下添加 syscall 兼容性测试。
 
-该文件是一个 C 语言编写的 syscall 兼容性测试程序，包含三个测试组：
+PR 严格遵循项目规范：
+- 文件放置在正确的 `normal/qemu-smp1/syscall/` 路径下，可被 xtask runner 自动发现
+- 包含 `c/CMakeLists.txt` 编译配置，遵循项目统一安装到 `usr/bin/starry-test-suit`
+- 使用项目统一的 `test_framework.h`（TEST_START/CHECK/CHECK_ERR/CHECK_RET/TEST_DONE 宏）
+- 已通过 mai-team-app bot 审核（Approved）
 
-**File I/O 组（8个测试）：**
-- open 打开不存在文件应返回 ENOENT
-- open O_CREAT 创建文件应成功
+测试内容覆盖两个测试组：
+
+**File I/O 组（6个测试）：**
+- open 不存在文件返回 ENOENT
+- openat O_CREAT 创建写入文件成功
 - write 返回实际写入字节数
-- read 从只写 fd 读应返回 EBADF
 - stat 返回正确文件大小
-- lseek 非法 whence 应返回 EINVAL
-- close 无效 fd 应返回 EBADF
-- open 目录以 O_WRONLY 应返回 EISDIR
+- unlink 删除文件成功
+- open 目录以 O_WRONLY 返回 EISDIR
 
-**Process 组（5个测试）：**
+**Process 组（4个测试）：**
 - getpid 返回正值
 - getppid 返回正值
-- getpid != getppid
-- getuid 返回非负值
-- getgid 返回非负值
-
-**Memory 组（4个测试）：**
-- mmap 匿名映射成功
-- mmap 页面零初始化
-- munmap 成功
-- mmap 零长度返回 EINVAL
+- pid == ppid 时输出 INFO 日志（软断言，兼容 init 进程场景）
+- getuid/getgid 返回非负值
 
 ## 七、项目数据
 
@@ -200,13 +211,13 @@ CI 配置文件：`.github/workflows/ci.yml`
 | 代码行数 | 11,655 行 |
 | 测试用例 | 360 个 |
 | 测试模块 | 35 个 |
-| CI 通过 | 331 Pass / 1 Unimplemented / 0 Fail |
-| GitHub Star | 5 |
-| Commit 数量 | 24 |
-| tgoskits PR | #995 |
+| CI 通过 | 359 Pass / 1 Unimplemented / 0 Fail |
+| tgoskits PR | #995（已通过 bot 审核） |
 
 ## 八、总结
 
 syscall-compat-tests 为 rCore-OS 生态提供了一套系统性、可量化的 Linux syscall 兼容性测试工具。通过在 Linux 上建立 baseline，再交叉编译到 RISC-V 目标内核运行，可以精确定位兼容性差异，为 StarryOS、ArceOS 等内核的 Linux 兼容性改进提供数据支撑。
+
+项目覆盖 120+ Linux syscall，横跨文件 I/O、内存管理、网络、信号、进程、线程、IPC、时间、目录操作、epoll、调度器、扩展文件操作等 13 个大类，是 rCore-OS 生态中目前最全面的 syscall 兼容性测试工具。
 
 时间：2026年5月
